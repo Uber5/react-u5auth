@@ -1,6 +1,6 @@
 import React from 'react'
 import { setLocalToken, getLocalToken, getLocalExpiresAt } from '../local-token'
-import contextTypes from '../context-types'
+import AuthContextType from '../context-types'
 import { hashed } from '../authenticated'
 import { getHashValues } from '../lib/utils'
 
@@ -169,6 +169,6 @@ class TokenManager extends React.Component {
   }
 }
 
-TokenManager.contextTypes = contextTypes
+TokenManager.contextType = AuthContextType
 
 export default TokenManager
