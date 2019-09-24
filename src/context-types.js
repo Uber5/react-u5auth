@@ -1,9 +1,5 @@
-import PropTypes from 'prop-types'
+import { createContext } from 'react'
 
-const contextTypes = {
-  provider: PropTypes.string.isRequired,
-  clientId: PropTypes.string.isRequired,
-  loggingInIndicator: PropTypes.element
-}
+const AuthContextType = createContext()
 
-export default contextTypes
+export default AuthContextType

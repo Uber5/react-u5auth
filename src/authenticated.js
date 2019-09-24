@@ -1,24 +1,9 @@
 import React from 'react'
 import { getLocalToken } from './local-token'
-import contextTypes from './context-types'
-
-export function hashed(o) {
-  return Object
-    .getOwnPropertyNames(o)
-    .map(prop => `${ prop }=${ encodeURIComponent(o[prop]) }`)
-    .join('&')
-}
+import AuthContextType from './context-types'
+import { authorize } from './lib/utils'
 
 export const authenticated = () => Component => {
-  function authorize(provider, clientId) {
-    const query = {
-      client_id: clientId,
-      response_type: 'token',
-      redirect_uri: window.location
-    }
-    const url = `${ provider }/authorize?${ hashed(query) }`
-    window.location.replace(url)
-  }
   class Authed extends React.Component {
     render() {
       const token = getLocalToken()
@@ -31,6 +16,6 @@ export const authenticated = () => Component => {
       }
     }
   }
-  Authed.contextTypes = contextTypes
+  Authed.contextType = AuthContextType
   return Authed
 }

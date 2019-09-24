@@ -1,4 +1,16 @@
+export const hashed = o => Object.getOwnPropertyNames(o)
+  .map(prop => `${ prop }=${ encodeURIComponent(o[prop]) }`)
+  .join('&')
 
+export const authorize = (provider, clientId) => {
+  const query = {
+    client_id: clientId,
+    response_type: 'token',
+    redirect_uri: window.location
+  }
+  const url = `${ provider }/authorize?${ hashed(query) }`
+  window.location.replace(url)
+}
 
 export const getHashValues = () => {
   const hash = window.location.hash
