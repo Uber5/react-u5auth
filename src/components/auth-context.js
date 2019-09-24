@@ -1,5 +1,6 @@
 import React from 'react'
-import contextTypes from '../context-types'
+import AuthContextType from '../context-types'
+import PropTypes from 'prop-types'
 import { getHashValues } from '../lib/utils'
 
 import TokenManager from './token-manager'
@@ -40,11 +41,6 @@ class Debug extends React.Component {
 }
 
 export class AuthContext extends React.Component {
-  getChildContext() {
-    const { provider, clientId, loggingInIndicator } = this.props
-    return { provider, clientId, loggingInIndicator }
-  }
-
   isDebugEnabled = () => {
     return !!(localStorage.getItem('debug') || '').match(/react-u5auth/)
   }
@@ -59,18 +55,23 @@ export class AuthContext extends React.Component {
     console.log('react-u5auth, debug', debug)
     return (
       <div>
-        <TokenManager
-          onTokenUpdate={token => {
-            this.setState({ token })
-            onTokenUpdate && onTokenUpdate(token)
-          }}
-        />
-        { debug && <Debug contextProps={contextProps} contextState={this.state} hashValues={state} />}
-        { showChildren && this.props.children }
+        <AuthContextType.Provider value={contextProps}>
+          <TokenManager
+            onTokenUpdate={token => {
+              this.setState({ token })
+              onTokenUpdate && onTokenUpdate(token)
+            }}
+          />
+          { debug && <Debug contextProps={contextProps} contextState={this.state} hashValues={state} />}
+          { showChildren && this.props.children }
+        </AuthContextType.Provider>
       </div>
     )
   }
 }
 
-AuthContext.propTypes = contextTypes
-AuthContext.childContextTypes = contextTypes
+AuthContext.propTypes = {
+  provider: PropTypes.string.isRequired,
+  clientId: PropTypes.string.isRequired,
+  loggingInIndicator: PropTypes.element
+}

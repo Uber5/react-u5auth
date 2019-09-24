@@ -1,6 +1,6 @@
 import React from 'react'
 import { getLocalToken } from './local-token'
-import contextTypes from './context-types'
+import AuthContextType from './context-types'
 
 export function hashed(o) {
   return Object
@@ -31,6 +31,6 @@ export const authenticated = () => Component => {
       }
     }
   }
-  Authed.contextTypes = contextTypes
+  Authed.contextType = AuthContextType
   return Authed
 }
