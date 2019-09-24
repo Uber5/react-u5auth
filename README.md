@@ -52,6 +52,28 @@ const SomeOtherComponent = () => (<p>This is some other component</p>)
 const ProtectedComponent = authenticated()(() => (<SomeOtherComponent />))
 ```
 
+Instead of the higher-order function the hook `useAuthentication` can be used for the same purpose:
+
+```js
+import { useAuthentication } from 'react-u5auth'
+
+const SomeComponent = () => (
+  <p>Some component that needs an authenticated user...</p>
+)
+
+const ProtectedComponent = () => {
+  const { authenticated } = useAuthentication()
+
+  if (!authenticated) {
+    // This will appear only for a short time before the
+    // redirect to the auth provider URL kicks in.
+    return <p>Logging in...</p>
+  } else {
+    return <SomeComponent />
+  }
+}
+```
+
 ## Using the `access_token`
 
 A protected component isn't too valuable on its own, you may need an access
@@ -65,6 +87,13 @@ import { getLocalToken } from 'react-u5auth'
 const token = getLocalToken()
 ...
 ```
+
+The `useAuthentication` hook also returns the token:
+
+```js
+const { authenticated, token } = useAuthentication()
+```
+
 
 Please note: There is something fishy here about the `access_token`
 being kept in global state. See
