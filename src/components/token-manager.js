@@ -8,6 +8,8 @@ class TokenManager extends React.Component {
 
   state = { refreshing: false }
 
+  isRefreshingInIframe = false
+
   handleTokenUpdate(token, expires_in) {
     setLocalToken(token, expires_in)
     if (this.props.onTokenUpdate) {
@@ -130,7 +132,6 @@ class TokenManager extends React.Component {
 
   render() {
 
-    let isRefreshingInIframe = false
     const results = getHashValues()
 
     if (results.access_token) {
@@ -140,9 +141,9 @@ class TokenManager extends React.Component {
       // and, if state contains 'refreshing', then we are inside the
       // iframe, and therefore must break recursion
       if (state && state.match(/^refreshing/)) {
-        isRefreshingInIframe = true
+        this.isRefreshingInIframe = true
       }
-      if (expires_in && !isRefreshingInIframe) {
+      if (expires_in && !this.isRefreshingInIframe) {
         // expires_in = "75" // for testing
         this.setRefreshTimer(expires_in)
       }
@@ -151,7 +152,7 @@ class TokenManager extends React.Component {
 
     return (
       <div style={{ display: 'none' }}>
-        { isRefreshingInIframe &&
+        { this.isRefreshingInIframe &&
           <div>
             <div id="token">{ this.state.token }</div>
             <div id="expires_in">{ this.state.expires_in }</div>
