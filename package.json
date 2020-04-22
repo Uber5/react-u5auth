@@ -1,10 +1,11 @@
 {
-  "name": "react-u5auth",
-  "version": "0.1.7",
-  "description": "React components to authenticate via U5auth (OAuth2)",
+  "name": "react-pkce",
+  "version": "0.9.7",
+  "description": "React components to authenticate via PKCE",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel src --out-dir dist --source-maps",
+    "start": "PORT=3001 react-scripts start",
+    "build": "babel src/lib --out-dir dist --source-maps",
     "build:watch": "npm run build -- --watch",
     "prepublish": "npm run clean && npm run build",
     "clean": "rimraf dist",
@@ -13,14 +14,14 @@
   },
   "author": "Chris Oloff <chris@uber5.com> (http://about.uber5.com/)",
   "license": "MIT",
+  "homepage": "https://github.com/Uber5/react-u5auth/tree/react-pkce",
   "repository": {
     "type": "git",
     "url": "https://github.com/Uber5/react-u5auth.git"
   },
   "dependencies": {},
   "peerDependencies": {
-    "react": "^15.0.0 || ^16.0.0",
-    "prop-types": "^15.0.0"
+    "react": "^16.8.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -32,11 +33,9 @@
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-scripts": "^3.2.0",
     "rimraf": "2.5.4",
-    "source-map-support": "0.4.5",
-    "webpack": "^4.39.2",
-    "webpack-cli": "^3.3.6",
-    "webpack-dev-server": "^3.8.0"
+    "source-map-support": "0.4.5"
   },
   "babel": {
     "presets": [
@@ -45,6 +44,18 @@
     ],
     "plugins": [
       "@babel/plugin-proposal-class-properties"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
     ]
   }
 }
